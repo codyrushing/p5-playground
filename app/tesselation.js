@@ -16,15 +16,15 @@ var sketch = function(p){
     p.createCanvas(width,height);
 
     // build random points
-    vertices = d3_array.range(250).map(function(){
+    vertices = d3_array.range(100).map(function(){
       return [
         Math.floor(Math.random() * width),
         Math.floor(Math.random() * height)
       ]
     });
 
-    // add corners to ensure full coverage of the tesselation
-    vertices = vertices.concat([[0,0],[0,height],[width,0],[width,height]]);
+    // add canvas corners to ensure full coverage of the tesselation
+    // vertices = vertices.concat([[0,0],[0,height],[width,0],[width,height]]);
     polygons = d3_voronoi
       .voronoi()
       // clip to canvas bounds
@@ -32,7 +32,7 @@ var sketch = function(p){
         [0,0],
         [width, height]
       ])
-      (vertices);
+      .polygons(vertices);
 
     // convert to Regions
     polygons = polygons.map(function(coords){
@@ -46,7 +46,7 @@ var sketch = function(p){
     polygons.forEach(function(currPolygon){
       p.fill(255, 100);
       p.beginShape();
-      p.strokeWeight(0);
+      p.strokeWeight(1);
       currPolygon.getInsetPoints(5).forEach(function(curr, i, points){
         p.vertex(
           curr.x,

@@ -51,12 +51,11 @@ Region.prototype = {
       return new Point(x / f, y / f);
   },
   inside: function(point){
-    console.log(this.points);
     return inside([point.x, point.y], this.asPairs());
   },
-  insetPoints: function(inset){
+  getInsetPoints: function(inset){
     var self = this;
-    return this.points.map(function(point, i, points){
+    return this.points.map(function(curr, i, points){
       // get next and prev points
       var prev = i > 0 ? points[i-1] : points[points.length-1];
       var next = i < points.length-1 ? points[i+1] : points[0];
@@ -81,16 +80,15 @@ Region.prototype = {
 
       inset = inset || 1;
 
-      return self.inside(testPoint)){
-        ?
+      return self.inside(testPoint) ?
           new Point(
             curr.x + Math.cos(correctionArc) * inset,
             curr.y + Math.sin(correctionArc) * inset
-          )
-        : new Point(
-          curr.x + Math.cos(correctionArc) * inset,
-          curr.y + Math.sin(correctionArc) * inset
-        );
+          ) :
+          new Point(
+            curr.x + Math.cos(correctionArc) * inset,
+            curr.y + Math.sin(correctionArc) * inset
+          );
 
     });
 

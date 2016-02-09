@@ -21,14 +21,16 @@ gulp.task("js", function(){
   });
 
   return b.bundle()
-    .pipe(source("tesselation.js"))
-    .pipe(buffer())
-    .pipe(gulpPlugins.sourcemaps.init({loadMaps: true}))
     .on("error", function(err){
+      console.log("ERROR");
+      console.log(err);
       console.log(err.message);
       this.emit("end");
       this.emit("close");
     })
+    .pipe(source("tesselation.js"))
+    .pipe(buffer())
+    .pipe(gulpPlugins.sourcemaps.init({loadMaps: true}))
     .pipe(gulpPlugins.sourcemaps.write())
     .pipe(gulp.dest(paths.dist.js));
 });
